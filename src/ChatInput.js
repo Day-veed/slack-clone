@@ -1,17 +1,24 @@
 import { Button } from '@mui/material';
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from "styled-components";
 
 function ChatInput({ channelName, channelId }) {
+    const inputRef = useRef(null);
 
     const sendMessage = (e) => {
         e.preventDefault();
+
+        if (channelId) {
+            return false;
+        }
+
+
     }
 
   return (
     <ChatInputContainer>
         <form>
-            <input placeholder={`Message #ROOM`} />
+            <input ref={inputRef} placeholder={`Message #ROOM`} />
             <Button hidden type='submit' onClick={sendMessage}>
                 SEND
             </Button>
