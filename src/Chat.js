@@ -8,6 +8,7 @@ import ChatInput from './ChatInput';
 
 function Chat() {
     const roomId = useSelector(selectRoomId);
+    console.log(` ${roomId} is not`);
 
   return (
     <ChatContainer>
