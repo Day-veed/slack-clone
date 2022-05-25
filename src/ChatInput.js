@@ -7,14 +7,12 @@ import firebase from 'firebase/compat/app';
 
 function ChatInput({ channelName, channelId }) {
     const [input, setInput] = useState("");
-    console.log(channelId);
     const sendMessage = (e) => {
         e.preventDefault();
-        console.log(channelId);
+        
         if (!channelId) {
             return false;
         }
-        console.log(`well and good ${input}`)
         db.collection ("rooms").doc(channelId).collection("messages").add({
             message: input,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -28,7 +26,7 @@ function ChatInput({ channelName, channelId }) {
   return (
     <ChatInputContainer>
         <form>
-            <input value={input} onChange={(e => setInput(e.target.value))} placeholder={`Message #ROOM`} />
+            <input value={input} onChange={(e => setInput(e.target.value))} placeholder={`Message #${channelName}`} />
             <Button hidden type='submit' onClick={sendMessage}>
                 SEND
             </Button>
