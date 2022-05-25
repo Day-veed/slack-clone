@@ -13,11 +13,13 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import AddIcon from '@mui/icons-material/Add'
 import SidebarOption from './SidebarOption';
-import { db } from './firebase';
+import { auth, db } from './firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function SideBar() {
     const [channels, loading, error] = useCollection(db.collection("rooms"));
+    const [user] = useAuthState(auth);
 
   return (
     <SidebarContainer>
@@ -26,7 +28,7 @@ function SideBar() {
                 <h2>PAPA FAM HQ</h2>
                 <h3>
                     <FiberManualRecordIcon />
-                    Sonny Sangha
+                    {user.displayName}
                 </h3>
             </SidebarInfo>
             <CreateIcon />

@@ -1,12 +1,15 @@
 import { Button } from '@mui/material';
 import React, { useRef, useState } from 'react'
 import styled from "styled-components";
-import { db } from './firebase';
+import { auth, db } from './firebase';
 import firebase from 'firebase/compat/app';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 
 function ChatInput({ channelName, channelId, chatRef }) {
     const [input, setInput] = useState("");
+    const [user] = useAuthState(auth);
+
     const sendMessage = (e) => {
         e.preventDefault();
         
@@ -16,8 +19,8 @@ function ChatInput({ channelName, channelId, chatRef }) {
         db.collection ("rooms").doc(channelId).collection("messages").add({
             message: input,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            user: "Sonny Sangha",
-            userImage: 'https://www.bing.com/th?id=OIP.trcmkWTBTosWX1Mpm4DgeAHaE6&w=140&h=106&c=8&rs=1&qlt=90&o=6&dpr=1.25&pid=3.1&rm=2'
+            user: user.displayName,
+            userImage: user.photoURL,
         });
 
         chatRef.current.scrollIntoView({
